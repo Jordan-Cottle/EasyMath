@@ -1,0 +1,155 @@
+
+/**
+ * Class holds the definition for a vector as well as various methods that can work on them. 
+ *
+ * @author Jordan
+ * @version 1
+ */
+public class Vector
+{
+    public final double [] components;
+    public final int dimension;
+    public final double magnitude;
+    
+    public Vector(double... components){
+        this.components = components;
+        this.dimension = components.length;
+        this.magnitude = norm();
+    }
+
+    private double norm() {
+        double sum = 0;
+        for (double component: this.components){
+            sum += Math.pow(component, 2);
+        }
+        
+        return Math.sqrt(sum);
+    }
+    
+    public Vector invert(){
+        double [] newComponents = new double [this.dimension];
+        
+        for (int i = 0; i < newComponents.length; i++){
+            newComponents[i] = - this.components[i] ;
+        }
+        
+        return new Vector(newComponents);
+    }
+    
+    public Vector add(Vector other){
+        double [] newComponents = new double [this.dimension];
+        
+        for (int i = 0; i < newComponents.length; i++){
+            newComponents[i] = this.components[i] + other.components[i];
+        }
+        
+        return new Vector(newComponents);
+    }
+    
+    public Vector add(Vector [] others){
+        Vector result = new Vector(0,0,0);
+        
+        for (Vector other: others){
+            result = result.add(other);
+        }
+        
+        return result;
+    }
+    
+    public Vector multiply(double scalar){
+        double [] newComponents = new double[this.dimension];
+        for(int i = 0; i < newComponents.length; i++){
+            newComponents[i] = this.components[i] * scalar;
+        }
+        
+        return new Vector(newComponents);
+    }
+    
+    public Vector divide(double scalar){
+        return this.multiply(1/scalar);
+    }
+    
+    public Vector normalize(){
+        return this.divide(magnitude);
+    }
+    
+    public double dotProduct(Vector other){
+        double sum = 0;
+        for(int i = 0; i < dimension; i++){
+            sum += this.components[i] * other.components[i];
+        }
+        
+        return sum;
+    }
+    
+    private double angleRatio(Vector other){
+        return (this.dotProduct(other)) / (this.magnitude * other.magnitude);
+    }
+    
+    public double angle(Vector other){
+        return Math.acos(angleRatio(other));
+    }
+    
+    
+    public double angleDregree(Vector other){
+        return angle(other) * (180 / Math.PI);
+    }
+    
+    public double scalarProjectionOnto(Vector other){
+        return other.dotProduct(this) / other.magnitude;
+    }
+    
+    public Vector vectorProjectionOnto(Vector other){
+        return other.normalize().multiply(scalarProjectionOnto(other));
+    }
+    
+    public Vector orthagonalProjectionOnto(Vector other){
+        return this.add(this.vectorProjectionOnto(other).invert());
+    }
+    
+    public Vector crossProduct(Vector other){
+        if (this.dimension != 3 || this.dimension != other.dimension){
+            throw new RuntimeException("Both vectors must be 3 dimensional for the cross product to be defined");
+        }
+        
+
+        return new Vector(
+            (this.components[2] * other.components[3]) - (this.components[3] * other.components[2]),
+            (this.components[3] * other.components[1]) - (this.components[1] * other.components[3]),
+            (this.components[1] * other.components[2]) - (this.components[2] * other.components[1]));
+    }
+    
+    
+    public String toString(){
+        StringBuilder str = new StringBuilder("<");
+        
+        for (double component: this.components){
+            str.append(String.format("%.02f, ",component));
+        }
+        
+        str.deleteCharAt(str.length()-2);
+        str.setCharAt(str.length()-1, '>');
+        
+        return str.toString();
+    } // end toString
+    
+    public boolean equals(Object obj){
+        if (obj == this){
+            return true;
+        }
+        else if (obj == null || this.getClass() != obj.getClass()){
+            return false;
+        }
+        else{
+            Vector vector = (Vector) obj;
+            
+            for(int i = 0; i < dimension; i++){
+                if (components[i] != vector.components[i]){
+                    return false;
+                } // end if
+            } // end for
+            
+            return true;
+        } // end else{}
+    } // end equals
+} // end class
