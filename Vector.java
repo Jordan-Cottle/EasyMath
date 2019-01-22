@@ -111,12 +111,10 @@ public class Vector
         if (this.dimension != 3 || this.dimension != other.dimension){
             throw new RuntimeException("Both vectors must be 3 dimensional for the cross product to be defined");
         }
-        
-
         return new Vector(
-            (this.components[2] * other.components[3]) - (this.components[3] * other.components[2]),
-            (this.components[3] * other.components[1]) - (this.components[1] * other.components[3]),
-            (this.components[1] * other.components[2]) - (this.components[2] * other.components[1]));
+            (this.components[1] * other.components[2]) - (this.components[2] * other.components[1]),
+            (this.components[2] * other.components[0]) - (this.components[0] * other.components[2]),
+            (this.components[0] * other.components[1]) - (this.components[1] * other.components[0]));
     }
     
     
