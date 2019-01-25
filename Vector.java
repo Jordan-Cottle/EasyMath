@@ -24,8 +24,7 @@ public class Vector
         this.magnitude = norm();
         
         // create starting and ending points from origin and given components
-        double[] origin = new double[this.components.length];
-        this.start = new Point(origin);
+        this.start = Point.origin(this.components.length);
         this.end = new Point(this.components);
     }
     
@@ -53,6 +52,15 @@ public class Vector
         }
         
         this.magnitude = norm();
+    }
+    
+    /**
+     * Constructs a new position vector using the provided Point as the endpoint
+     * 
+     * @param endPoint The endpoint for the new position vector to describe
+     */
+    public Vector(Point endPoint){
+        this(Point.origin(endPoint.dimension), endPoint);
     }
 
     private double norm() {

@@ -5,7 +5,7 @@
  * @author Jordan
  * @version 1/25/2019
  */
-public class Point{   
+public class Point{  
     public final int dimension;
     public final double [] coordinates;
     Point(double... coordinates){
@@ -19,5 +19,9 @@ public class Point{
             sum += Math.pow(other.coordinates[i] - this.coordinates[i], 2);
         }
         return Math.sqrt(sum);
+    }
+    
+    public static Point origin(int dimension){
+        return new Point(new double[dimension]);
     }
 }
