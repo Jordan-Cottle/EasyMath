@@ -3,7 +3,7 @@
  * Class holds the definition for a vector as well as various methods that can work on them. 
  *
  * @author Jordan
- * @version 1
+ * @version 1/25/2019
  */
 public class Vector
 {
