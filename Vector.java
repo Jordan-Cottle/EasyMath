@@ -7,8 +7,6 @@
  */
 public class Vector
 {
-    public final Point start;
-    public final Point end;
     public final double [] components;
     public final int dimension;
     public final double magnitude;
@@ -49,10 +47,6 @@ public class Vector
         this.components = components;
         this.dimension = components.length;
         this.magnitude = norm();
-        
-        // create starting and ending points from origin and given components
-        this.start = Point.origin(this.components.length);
-        this.end = new Point(this.components);
     }
     
     /**
@@ -62,20 +56,16 @@ public class Vector
      * @param end   The ending point for the vector
      */
     public Vector(Point start, Point end){
-        
-        
         if(start.dimension == end.dimension){
             this.dimension = start.dimension;
         }
         else{
             throw new RuntimeException("Two points that form a vector must be in the same dimension!");
         }
-        this.start = start;
-        this.end = end;
         
         this.components = new double[start.dimension];
         for(int i = 0; i < this.components.length; i++){
-            this.components[i] = this.end.coordinates[i] - this.start.coordinates[i];
+            this.components[i] = end.coordinates[i] - start.coordinates[i];
         }
         
         this.magnitude = norm();
@@ -87,7 +77,7 @@ public class Vector
      * @param endPoint The endpoint for the new position vector to describe
      */
     public Vector(Point endPoint){
-        this(Point.origin(endPoint.dimension), endPoint);
+        this(endPoint.coordinates);
     }
 
     private double norm() {
