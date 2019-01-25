@@ -47,18 +47,25 @@ public class Line
         String [] equations = new String[this.dimension];
         
         for(int i = 0; i < this.dimension; i++){
-            if (this.direction.components[i] >= 0){
-                equations[i] = String.format("%s = %.2f + %.2ft",
+            if(this.point.coordinates[i] != 0){
+                if (this.direction.components[i] >= 0){
+                    equations[i] = String.format("%s = %.2f + %.2ft",
+                                variables[i],
+                                this.point.coordinates[i],
+                                this.direction.components[i]);
+                }
+                else{
+                    equations[i] = String.format("%s = %.2f - %.2ft",
+                                variables[i],
+                                this.point.coordinates[i],
+                                Math.abs(this.direction.components[i]));
+                }
+            }
+            else { //this constant component  is 0
+                    equations[i] = String.format("%s = %.2ft",
                             variables[i],
-                            this.point.coordinates[i],
                             this.direction.components[i]);
-            }
-            else{
-                equations[i] = String.format("%s = %.2f - %.2ft",
-                            variables[i],
-                            this.point.coordinates[i],
-                            Math.abs(this.direction.components[i]));
-            }
+                }
         }
         return equations;
     }
