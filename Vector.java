@@ -13,6 +13,33 @@ public class Vector
     public final int dimension;
     public final double magnitude;
     
+    public static Vector i(int dimension){
+        if(dimension < 2) { 
+            throw new RuntimeException("i is only defined for dimension 2 or higher");
+        }
+        double[] components = new double [dimension];
+        components[0] = 1;
+        return new Vector(components);
+    }
+    
+    public static Vector j(int dimension){
+        if(dimension < 2) { 
+            throw new RuntimeException("j is only defined for dimension 2 or higher");
+        }
+        double[] components = new double [dimension];
+        components[1] = 1;
+        return new Vector(components);
+    }
+    
+    public static Vector k(int dimension){
+        if(dimension < 3) { 
+            throw new RuntimeException("k is only defined for dimension 3 or higher");
+        }
+        double[] components = new double [dimension];
+        components[2] = 1;
+        return new Vector(components);
+    }
+    
     /**
      * Constructs a new position vector from an array of components
      * 
@@ -100,6 +127,10 @@ public class Vector
         }
         
         return result;
+    }
+    
+    public Vector subtract(Vector other){
+        return this.add(other.invert());
     }
     
     public Vector multiply(double scalar){
