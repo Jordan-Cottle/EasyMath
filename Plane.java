@@ -63,6 +63,7 @@ public class Plane
      * @return The angle between two planes in radians
      */
     public double angle(Plane other){
+        checkDimension(other);
         return this.norm.angle(other.norm);
     }
 
@@ -74,7 +75,23 @@ public class Plane
      * @return The angle between the plane and vector in radians
      */
     public double angle(Vector other){
+        checkDimension(other);
         return this.norm.angle(other);
+    }
+
+    /**
+     * Computes the distance between a plane and a point
+     * 
+     * @param other The point to calculate distance to
+     * 
+     * @return The distance between the plane and a point
+     */
+    public double distance(Point other){
+        checkDimension(other);
+
+        Vector planeToPoint = new Vector (this.point, other);
+
+        return Math.abs(planeToPoint.scalarProjectionOnto(this.norm));
     }
 
     /**
@@ -123,5 +140,23 @@ public class Plane
         str.append(String.format(" = %.2f", d));
 
         return str.toString();
+    }
+
+    private void checkDimension(Point other){
+        if(this.dimension != other.dimension){
+            throw new RuntimeException("A plane and point must be in the same dimension to perform calculations!");
+        }
+    }
+
+    private void checkDimension(Vector other){
+        if(this.dimension != other.dimension){
+            throw new RuntimeException("A plane and vector must be in the same dimension to perform calculations!");
+        }
+    }
+
+    private void checkDimension(Plane other){
+        if(this.dimension != other.dimension){
+            throw new RuntimeException("Two planes must be in the same dimension to perform calculations!");
+        }
     }
 }
