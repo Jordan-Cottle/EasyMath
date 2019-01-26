@@ -26,7 +26,24 @@ public class Line
         this.point = point;
         this.direction = direction;
     }
-    
+
+    /**
+     * Calculates the distance from the line to a point
+     * 
+     * @param other The point to calculate distance to
+     * 
+     * @return The distance from the line to the point
+     */
+    public double distance(Point other){
+        Vector toPoint = new Vector(this.point, other);
+        
+        Vector projectionOntoLine = toPoint.vectorProjectionOnto(this.direction);
+        
+        
+        
+        return toPoint.subtract(projectionOntoLine).magnitude;
+    }
+
     /**
      * Gives the parametreic equations for the line
      * 
