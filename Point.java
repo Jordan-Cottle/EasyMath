@@ -5,8 +5,7 @@
  * @author Jordan
  * @version 1/25/2019
  */
-public class Point{  
-    public final int dimension;
+public class Point extends EuclideanObject{  
     public final double [] coordinates;
     
     /**
@@ -15,8 +14,8 @@ public class Point{
      * @param coordinates The coordinates as a dynamic array or doubles
      */
     Point(double... coordinates){
+        super(coordinates.length);
         this.coordinates = coordinates;
-        this.dimension = this.coordinates.length;
     }
     
     /**
@@ -42,9 +41,7 @@ public class Point{
      * @return A Point that lies halfway between the two points
      */
     public Point midPoint(Point other){
-        if (this.dimension != other.dimension){
-            throw new RuntimeException("Two points must be in the same dimensino to have a midpoint!");
-        }
+        checkDimension(other);
         
         double [] coordinates = new double[this.dimension];
         

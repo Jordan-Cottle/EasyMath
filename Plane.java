@@ -5,13 +5,12 @@
  * @author Jordan Cottle
  * @version 1/25/2019
  */
-public class Plane
+public class Plane extends EuclideanObject
 {
 
     public final Point point;
     public final Vector norm;
-    public final int dimension;
-
+    
     /**
      * Constructs a new Plane from a point on the plane and an orthogonal Vector
      * 
@@ -19,12 +18,7 @@ public class Plane
      * @param vector A vector that is orthogonal to the plane
      */
     public Plane(Point point, Vector vector){
-        if (point.dimension == vector.dimension){
-            this.dimension = point.dimension;
-        }
-        else{
-            throw new RuntimeException("Point and normal vector describing a plane must be in the same dimension!");
-        }
+        super(point, vector);
         this.point = point;
         this.norm = vector;
     }
@@ -37,12 +31,7 @@ public class Plane
      * @param r A point on the plane (must be unique)
      */
     public Plane(Point p, Point q, Point r){
-        if (p.dimension == q.dimension && p.dimension == r.dimension){
-            this.dimension = p.dimension;
-        }
-        else{
-            throw new RuntimeException("All points that define a plane must be in the same dimension!");
-        }
+        super(p, q, r);
 
         if(p.equals(q) || p.equals(r) || q.equals(r)){
             throw new RuntimeException("You need three unique points to define a plane!");
@@ -151,23 +140,5 @@ public class Plane
         str.append(String.format(" = %.2f", d));
 
         return str.toString();
-    }
-
-    private void checkDimension(Point other){
-        if(this.dimension != other.dimension){
-            throw new RuntimeException("A plane and point must be in the same dimension to perform calculations!");
-        }
-    }
-
-    private void checkDimension(Vector other){
-        if(this.dimension != other.dimension){
-            throw new RuntimeException("A plane and vector must be in the same dimension to perform calculations!");
-        }
-    }
-
-    private void checkDimension(Plane other){
-        if(this.dimension != other.dimension){
-            throw new RuntimeException("Two planes must be in the same dimension to perform calculations!");
-        }
     }
 }

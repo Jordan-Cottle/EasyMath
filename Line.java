@@ -4,11 +4,10 @@
  * @author Jordan Cottle
  * @version 1/25/2019
  */
-public class Line
+public class Line extends EuclideanObject
 {
     public final Point point;
     public final Vector direction;
-    public final int dimension;
 
     /**
      * Creates a line from a point and a direction
@@ -17,12 +16,7 @@ public class Line
      * @param direction A vector that is parallel to the line
      */
     public Line(Point point, Vector direction){
-        if(point.dimension == direction.dimension){
-            this.dimension = point.dimension;
-        }
-        else{
-            throw new RuntimeException("The point and direction vector of a line must be in the same dimension!");
-        }
+        super(point, direction);
         this.point = point;
         this.direction = direction;
     }
@@ -35,12 +29,11 @@ public class Line
      * @return The distance from the line to the point
      */
     public double distance(Point other){
+        checkDimension(other);
         Vector toPoint = new Vector(this.point, other);
         
         Vector projectionOntoLine = toPoint.vectorProjectionOnto(this.direction);
-        
-        
-        
+
         return toPoint.subtract(projectionOntoLine).magnitude;
     }
 

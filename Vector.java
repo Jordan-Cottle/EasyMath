@@ -1,14 +1,12 @@
-
 /**
  * Class holds the definition for a vector as well as various methods that can work on them. 
  *
  * @author Jordan
  * @version 1/25/2019
  */
-public class Vector
+public class Vector extends EuclideanObject
 {
     public final double [] components;
-    public final int dimension;
     public final double magnitude;
     
     public static Vector i(int dimension){
@@ -44,8 +42,8 @@ public class Vector
      * @param components A dynamically passed array of doubles that for the components of the vector
      */
     public Vector(double... components){
+        super(components.length);
         this.components = components;
-        this.dimension = components.length;
         this.magnitude = norm();
     }
     
@@ -56,13 +54,8 @@ public class Vector
      * @param end   The ending point for the vector
      */
     public Vector(Point start, Point end){
-        if(start.dimension == end.dimension){
-            this.dimension = start.dimension;
-        }
-        else{
-            throw new RuntimeException("Two points that form a vector must be in the same dimension!");
-        }
-        
+        super(start, end);
+
         this.components = new double[start.dimension];
         for(int i = 0; i < this.components.length; i++){
             this.components[i] = end.coordinates[i] - start.coordinates[i];
@@ -100,6 +93,7 @@ public class Vector
     }
     
     public Vector add(Vector other){
+        checkDimension(other);
         double [] newComponents = new double [this.dimension];
         
         for (int i = 0; i < newComponents.length; i++){
@@ -109,10 +103,10 @@ public class Vector
         return new Vector(newComponents);
     }
     
-    public Vector add(Vector [] others){
-        Vector result = new Vector(0,0,0);
-        
+    public Vector add(Vector... others){
+        Vector result = new Vector(this.components);
         for (Vector other: others){
+            checkDimension(other);
             result = result.add(other);
         }
         
@@ -120,6 +114,7 @@ public class Vector
     }
     
     public Vector subtract(Vector other){
+        checkDimension(other);
         return this.add(other.invert());
     }
     
@@ -141,6 +136,7 @@ public class Vector
     }
     
     public double dotProduct(Vector other){
+        checkDimension(other);
         double sum = 0;
         for(int i = 0; i < dimension; i++){
             sum += this.components[i] * other.components[i];
@@ -150,27 +146,33 @@ public class Vector
     }
     
     private double angleRatio(Vector other){
+        checkDimension(other);
         return (this.dotProduct(other)) / (this.magnitude * other.magnitude);
     }
     
     public double angle(Vector other){
+        checkDimension(other);
         return Math.acos(angleRatio(other));
     }
     
     
     public double angleDregree(Vector other){
+        checkDimension(other);
         return angle(other) * (180 / Math.PI);
     }
     
     public double scalarProjectionOnto(Vector other){
+        checkDimension(other);
         return other.dotProduct(this) / other.magnitude;
     }
     
     public Vector vectorProjectionOnto(Vector other){
+        checkDimension(other);
         return other.normalize().multiply(scalarProjectionOnto(other));
     }
     
     public Vector orthagonalProjectionOnto(Vector other){
+        checkDimension(other);
         return this.add(this.vectorProjectionOnto(other).invert());
     }
     
@@ -221,22 +223,4 @@ public class Vector
             return true;
         } // end else{}
     } // end equals
-    
-    private void checkDimension(Point other){
-        if(this.dimension != other.dimension){
-            throw new RuntimeException("A vector and point must be in the same dimension to perform calculations!");
-        }
-    }
-
-    private void checkDimension(Vector other){
-        if(this.dimension != other.dimension){
-            throw new RuntimeException("Two vectors must be in the same dimension to perform calculations!");
-        }
-    }
-
-    private void checkDimension(Plane other){
-        if(this.dimension != other.dimension){
-            throw new RuntimeException("A vector and a plane must be in the same dimension to perform calculations!");
-        }
-    }
 } // end class
