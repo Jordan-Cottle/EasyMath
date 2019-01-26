@@ -206,10 +206,14 @@ public class Vector
             return false;
         }
         else{
-            Vector vector = (Vector) obj;
+            Vector other = (Vector) obj;
+            
+            if(this.dimension != other.dimension){
+                return false;
+            }
             
             for(int i = 0; i < dimension; i++){
-                if (components[i] != vector.components[i]){
+                if (components[i] != other.components[i]){
                     return false;
                 } // end if
             } // end for
@@ -217,4 +221,22 @@ public class Vector
             return true;
         } // end else{}
     } // end equals
+    
+    private void checkDimension(Point other){
+        if(this.dimension != other.dimension){
+            throw new RuntimeException("A vector and point must be in the same dimension to perform calculations!");
+        }
+    }
+
+    private void checkDimension(Vector other){
+        if(this.dimension != other.dimension){
+            throw new RuntimeException("Two vectors must be in the same dimension to perform calculations!");
+        }
+    }
+
+    private void checkDimension(Plane other){
+        if(this.dimension != other.dimension){
+            throw new RuntimeException("A vector and a plane must be in the same dimension to perform calculations!");
+        }
+    }
 } // end class
