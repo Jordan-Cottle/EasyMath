@@ -110,7 +110,7 @@ public class Plane
                 }
             }
 
-            if (component > 0){
+            if (component > 0 || (firstItem && component != 0)){
                 str.append(String.format("%.2f%s",component, variables[i]));
                 firstItem = false;
             }
