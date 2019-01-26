@@ -93,6 +93,17 @@ public class Plane
 
         return Math.abs(planeToPoint.scalarProjectionOnto(this.norm));
     }
+    
+    public Line intersection(Plane other){
+        checkDimension(other);
+        
+        Vector direction = this.norm.crossProduct(other.norm);
+        
+        //get point on the new line
+        //TODO calculate actual intersection point for the new Line
+        //TODO use Matricies to manage systems of equations
+        return new Line(Point.origin(this.dimension), direction); 
+    }
 
     /**
      * Constructs a linear equation representation of the plane
