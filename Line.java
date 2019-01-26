@@ -9,7 +9,7 @@ public class Line
     public final Point point;
     public final Vector direction;
     public final int dimension;
-    
+
     /**
      * Creates a line from a point and a direction
      * 
@@ -60,34 +60,33 @@ public class Line
                 variables[i] = "x" + i;
             }
         }
-        
+
         String [] equations = new String[this.dimension];
-        
+
         for(int i = 0; i < this.dimension; i++){
             if(this.point.coordinates[i] != 0){
                 if (this.direction.components[i] >= 0){
                     equations[i] = String.format("%s = %.2f + %.2ft",
-                                variables[i],
-                                this.point.coordinates[i],
-                                this.direction.components[i]);
+                        variables[i],
+                        this.point.coordinates[i],
+                        this.direction.components[i]);
                 }
                 else{
                     equations[i] = String.format("%s = %.2f - %.2ft",
-                                variables[i],
-                                this.point.coordinates[i],
-                                Math.abs(this.direction.components[i]));
+                        variables[i],
+                        this.point.coordinates[i],
+                        Math.abs(this.direction.components[i]));
                 }
             }
             else { //this constant component  is 0
-                    equations[i] = String.format("%s = %.2ft",
-                            variables[i],
-                            this.direction.components[i]);
-                }
+                equations[i] = String.format("%s = %.2ft",
+                    variables[i],
+                    this.direction.components[i]);
+            }
         }
         return equations;
     }
-    
-    
+
     /**
      * Constructs the vector equation of the line
      * 
@@ -105,10 +104,10 @@ public class Line
                 basisVectors[i] = "e" + i;
             }
         }
-        
+
         //build vector equation
         StringBuilder str = new StringBuilder("r(t) =");
- 
+
         for(int i = 0; i < this.dimension; i++){
             if (i != 0){
                 str.append(" + (");
@@ -116,9 +115,9 @@ public class Line
             else{
                 str.append(" (");
             }
-            
+
             str.append(this.point.coordinates[i]);
-            
+
             if (this.direction.components[i] >= 0){
                 str.append(" + ");
                 str.append(this.direction.components[i]);
@@ -129,10 +128,10 @@ public class Line
             }
             str.append("t)" + basisVectors[i]);
         }
-     
+
         return str.toString();
     }
-    
+
     /**
      * Constructs the symmetric equations of the line
      * 
@@ -150,7 +149,7 @@ public class Line
                 variables[i] = "x" + i;
             }
         }
-        
+
         // count how many equations we need
         int equationCount = 1;
         for(double directionComponent: this.direction.components){
@@ -158,10 +157,10 @@ public class Line
                 equationCount += 1;
             }
         }
-        
+
         String [] equations = new String[equationCount];
         int constantEquationIndex = 1;  // equations[0] is the main equation
-        
+
         //construct main equation
         StringBuilder str = new StringBuilder();
         String tail = " = ";
@@ -172,38 +171,38 @@ public class Line
             if(this.direction.components[i] != 0){
                 if (this.point.coordinates[i] > 0){
                     str.append(String.format("(%s - %.2f) / %.2f%s",
-                    variables[i],
-                    this.point.coordinates[i],
-                    this.direction.components[i],
-                    tail));
+                            variables[i],
+                            this.point.coordinates[i],
+                            this.direction.components[i],
+                            tail));
                 }
                 else if (this.point.coordinates[i] == 0){
                     str.append(String.format("%s / %.2f%s",
-                    variables[i],
-                    this.direction.components[i],
-                    tail));
+                            variables[i],
+                            this.direction.components[i],
+                            tail));
                 }
                 else{  // starting point coordinate is negative
                     str.append(String.format("(%s + %.2f) / %.2f%s",
-                    variables[i],
-                    Math.abs(this.point.coordinates[i]),
-                    this.direction.components[i],
-                    tail));
+                            variables[i],
+                            Math.abs(this.point.coordinates[i]),
+                            this.direction.components[i],
+                            tail));
                 }  
             } // end non zero direction component condition
-            
+
             else{  //direction component is 0
                 // create new constant equation
                 equations[constantEquationIndex++] = String.format("%s = %.2f",
-                                                                    variables[i],
-                                                                    this.point.coordinates[i]);
+                    variables[i],
+                    this.point.coordinates[i]);
             }
         } // end loop through dimensions
         equations[0] = str.toString();
-        
+
         return equations;
     }
-    
+
     /**
      * Returns the line as represented by its vector equation
      */
