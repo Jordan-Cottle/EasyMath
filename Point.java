@@ -3,7 +3,7 @@
  * Class to respresent a point in n dimensions defined by n scalars
  *
  * @author Jordan
- * @version 1/25/2019
+ * @version 1/30/2019
  */
 public class Point extends EuclideanObject{  
     public final double [] coordinates;
