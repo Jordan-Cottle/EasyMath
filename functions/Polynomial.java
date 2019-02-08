@@ -27,14 +27,14 @@ public class Polynomial implements Equation
     /**
      * Performs the function operation on the given input
      * 
-     * @param variableValues The value to put into the polynomial
+     * @param variableValues The value to put into the polynomial, note that this function technically accepts multiple inputs, but only the first will be used
      * 
      * @return The value of the polynomial at the given point
      */
     @Override
     public double getValue(double... variableValues){
         if(variableValues.length > 1){
-            throw new RuntimeException("Use PolyPolynomial to work with multivariable Polynomials");
+            System.out.println("This polynomial only operates on a single variable, only the first provided value will be used");
         }
         double x = variableValues[0];
         double sum = 0;
