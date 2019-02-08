@@ -1,3 +1,5 @@
+package objects;
+
 /**
  * Class holds the definition for a vector as well as various methods that can work on them. 
  *

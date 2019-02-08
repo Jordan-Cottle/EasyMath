@@ -1,3 +1,5 @@
+package objects;
+
 
 /**
  * Abstract class EuclideanObject - Contains fields and methods common to points/vectors/lines/planes

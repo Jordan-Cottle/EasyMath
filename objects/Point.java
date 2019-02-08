@@ -1,3 +1,5 @@
+package objects;
+
 
 /**
  * Class to respresent a point in n dimensions defined by n scalars

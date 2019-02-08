@@ -1,3 +1,7 @@
+package objects;
+
+import functions.VectorFunction;
+
 /**
  * Class to create and perform calculations with lines
  *
@@ -8,6 +12,8 @@ public class Line extends EuclideanObject
 {
     public final Point point;
     public final Vector direction;
+    
+    public final VectorFunction function;
 
     /**
      * Creates a line from a point and a direction
@@ -19,6 +25,8 @@ public class Line extends EuclideanObject
         super(point, direction);
         this.point = point;
         this.direction = direction;
+        
+        this.function = new VectorFunction(new Vector(point), direction);
     }
 
     /**
