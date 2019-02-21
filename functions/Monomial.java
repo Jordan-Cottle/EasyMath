@@ -1,20 +1,21 @@
 package functions;
 
 import java.util.Map;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 /**
- * Represents a 
+ * Represents a monomial expression that can be evaluated to a real number provided a series of real numbers to substitute variables for
  *
  * @author Jordan Cottle
- * @version 2/8/2019
+ * @version 2/21/2019
  */
 public class Monomial{
 
 
-    private double coefficient;
-    private LinkedHashMap<String, Double> variables;
+    private final double coefficient;
+    private final LinkedHashMap<String, Double> variables;
 
-    private boolean negative;
+    private final boolean negative;
 
     /**
      * Creates a simple Monomial of one variable from a coefficient and an exponent
@@ -109,13 +110,36 @@ public class Monomial{
     }
 
     public Monomial add(Monomial other){
-        // TODO implement adding monomials together if their variables and powers match
-        return this;
+        Map<String, Double> otherVariables = other.getVariables();
+
+        // validate variables and exponents on each variable match
+        for(String variable: variables.keySet()){
+            if(!(otherVariables.containsKey(variable))){
+                throw new IllegalArgumentException("In order to combine two monomials through addition, they need to have the same variables!");
+            }
+
+            if(otherVariables.get(variable) != variables.get(variable)){
+                throw new IllegalArgumentException("Two monomials can only be combined through addition of the exponents on each variable match!");
+            }
+        }
+        
+        return new Monomial(this.coefficient + other.getCoefficient(), this.variables);
     }
 
     public Monomial multiply(Monomial other){
         // TODO implement multiplying two monomials together to form a single monomial
         return this;
+    }
+
+    /**
+     * Gets a read-only copy of this monomial's variable to exponent map.
+     */
+    public Map<String, Double> getVariables(){
+        return Collections.unmodifiableMap(this.variables);
+    }
+
+    public double getCoefficient(){
+        return this.coefficient;
     }
 
     public String toString(){
