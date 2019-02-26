@@ -5,7 +5,7 @@ package objects;
  * Class to respresent a point in n dimensions defined by n scalars
  *
  * @author Jordan
- * @version 1/30/2019
+ * @version 2/25/2019
  */
 public class Point extends EuclideanObject{  
     public final double [] coordinates;
@@ -56,5 +56,38 @@ public class Point extends EuclideanObject{
     
     public static Point origin(int dimension){
         return new Point(new double[dimension]);
+    }
+    
+    
+    public String toString(){
+        StringBuilder str = new StringBuilder("Point (");
+        for(double coordinate: coordinates){
+            str.append(String.format("%.2f, ", coordinate));
+        }
+        
+        str.replace(str.length()-2, str.length()-1, ")");
+        return str.toString();
+    }
+    
+    public boolean equals(Object other){
+        if(this == other){
+            return true;
+        }
+        else if(this.getClass() != other.getClass()){
+            return false;
+        }
+        
+        Point point = (Point) other;
+        
+        checkDimension(point);
+        
+        for(int i = 0; i < dimension; i++){
+            double delta = Math.abs(this.coordinates[i] - point.coordinates[i]);
+            if(delta > Math.pow(10, -10)){
+                return false;
+            }
+        }
+        
+        return true;
     }
 }
