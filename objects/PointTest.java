@@ -4,7 +4,7 @@ import java.util.Random;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.junit.BeforeClass;
+import org.junit.Before;
 
 /**
  * The test class PointTest.
@@ -23,8 +23,8 @@ public class PointTest
     
     private static Random r;
     
-    @BeforeClass
-    public static void setUpRandom(){
+    @Before
+    public void setUpRandom(){
         long seed = System.currentTimeMillis();
         log("Testing seed: " + seed);
         r = new Random(seed);
