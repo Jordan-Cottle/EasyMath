@@ -33,7 +33,7 @@ public abstract class EuclideanObject
             int excpectedDimension = objects[0].dimension;
             for(EuclideanObject object: objects){
                 if(object.dimension != excpectedDimension){
-                    throw new RuntimeException("Euclidean objects must be in the same dimension to be used in conjunction with each other!");
+                    throw new IllegalArgumentException("Euclidean objects must be in the same dimension to be used in conjunction with each other!");
                 }
             }
             this.dimension = excpectedDimension;
@@ -45,7 +45,7 @@ public abstract class EuclideanObject
      */
     protected void checkDimension(EuclideanObject other){
         if(this.dimension != other.dimension){
-            throw new RuntimeException("Two objects must be in the same dimension to perform calculations!");
+            throw new IllegalArgumentException("Two objects must be in the same dimension to perform calculations!");
         }
     }
 }
