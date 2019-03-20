@@ -109,6 +109,13 @@ public class Monomial{
         return result * coefficient;
     }
 
+    /**
+     * Combines two monomials with like terms together through addition
+     * 
+     * @param other The other monomial to add to this one
+     * 
+     * @return A new monomial that is the combined result of the addition of two monomials
+     */
     public Monomial add(Monomial other){
         Map<String, Double> otherVariables = other.getVariables();
 
@@ -126,6 +133,13 @@ public class Monomial{
         return new Monomial(this.coefficient + other.getCoefficient(), this.variables);
     }
 
+    /**
+     * Multiplies two monomials together and returns a new Monomial object as the result
+     * 
+     * @param other The other monomial to multiply with this one
+     * 
+     * @return A new monomial that represents the result of multiplying the two monomials together
+     */
     public Monomial multiply(Monomial other){
         // TODO implement multiplying two monomials together to form a single monomial
         return this;
