@@ -170,11 +170,14 @@ public class Fraction{
 
     // Calculates the greatest common factor of two integers
     private int greatestCommonFactor(int a, int b){
+        a = Math.abs(a);
+        b = Math.abs(b);
+        
         int smallerValue = a < b ? a: b;
         int largerValue = a > b ? a: b;
 
         int greatestCommonFactor = 1;
-        for(int i = Math.abs(smallerValue); i > 0; i--){
+        for(int i = smallerValue; i > 0; i--){
             if(smallerValue % i != 0) continue;
 
             if(largerValue % i == 0){
